@@ -1,9 +1,10 @@
-import { GlobalContext, backendUrl } from "@/App";
+import { GlobalContext, User, backendUrl } from "@/App";
 import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { SetStateAction, useContext, useEffect, useState } from "react";
 import { FaFileUpload } from "react-icons/fa";
+
 
 type userDataMsg = {
   message:string;
@@ -11,7 +12,7 @@ type userDataMsg = {
 }
 
 const Profile = () => {
-  const { loggedInUser, setLoggedInUser } = useContext(GlobalContext);
+  const { loggedInUser, setLoggedInUser }:{loggedInUser:User;setLoggedInUser:React.Dispatch<SetStateAction<User>>} = useContext(GlobalContext);
   const [name, setName] = useState<string>("");
   const [addressLine1, setAddressLine1] = useState<string>("");
   const [addressLine2, setAddressLine2] = useState<string>("");

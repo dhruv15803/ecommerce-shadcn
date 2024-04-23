@@ -15,7 +15,7 @@ const Register = () => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
-    const [passwordValidityErrorMessages,setPasswordValidityErrorMessages] = useState<errorMsgType[] | null | string | []>(null);
+    const [passwordValidityErrorMessages,setPasswordValidityErrorMessages] = useState<any>("");
     const navigate = useNavigate();
 
     // passwords requirement
@@ -68,13 +68,13 @@ const Register = () => {
             if(email.trim()==="" || password.trim()==="" || confirmPassword.trim()==="") {
                 setPasswordValidityErrorMessages("Please enter all the required fields!");
                 setTimeout(() => {
-                    setPasswordValidityErrorMessages(null);
+                    setPasswordValidityErrorMessages("");
                 },5000)
                 return;
             } else if(password!==confirmPassword) {
                 setPasswordValidityErrorMessages("Please check your details");
                 setTimeout(() => {
-                    setPasswordValidityErrorMessages(null);
+                    setPasswordValidityErrorMessages("");
                 },5000)
                 return;
             } else {
@@ -82,7 +82,7 @@ const Register = () => {
                 // go through checklist above to check validity
                 if(password.length < 8) {
                     isPasswordValid=false;
-                    setPasswordValidityErrorMessages((prev) => {
+                    setPasswordValidityErrorMessages((prev:errorMsgType[]) => {
                         if(prev.length===0) return [
                             {
                                 message:"password should have a minimum length of 8",
@@ -100,7 +100,7 @@ const Register = () => {
                 }
                 if( !isPasswordUpperCase(password)) {
                     isPasswordValid=false;
-                    setPasswordValidityErrorMessages((prev) => {
+                    setPasswordValidityErrorMessages((prev:errorMsgType[]) => {
                         
                         if(prev.length===0) return [
                             {
@@ -119,7 +119,7 @@ const Register = () => {
                 }
                 if(!isPasswordSpecialChar(password)) {
                     isPasswordValid=false;
-                    setPasswordValidityErrorMessages((prev) =>{
+                    setPasswordValidityErrorMessages((prev:errorMsgType[]) =>{
     
                         if(prev.length===0) return [
                             {
@@ -138,7 +138,7 @@ const Register = () => {
                 }
                 if(!isPasswordNumeric) {
                     isPasswordValid=false;
-                    setPasswordValidityErrorMessages((prev) => {
+                    setPasswordValidityErrorMessages((prev:errorMsgType[]) => {
     
                         if(prev.length===0) return [
                             {
@@ -199,7 +199,7 @@ const Register = () => {
                         {passwordValidityErrorMessages}
                     </div> : <><div className='flex flex-col gap-1'>
                         <ul>
-                            {passwordValidityErrorMessages?.map((item,index) => {
+                            {passwordValidityErrorMessages?.map((item:any,index:any) => {
                                 return <li className='text-red-500' key={index}>{item.message}</li>
                             })}
                         </ul>

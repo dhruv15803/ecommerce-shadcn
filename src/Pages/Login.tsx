@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { SetStateAction, useContext, useState } from 'react'
 import { Button } from '../components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
 import { Checkbox } from '../components/ui/checkbox';
 import axios from 'axios';
-import { GlobalContext, backendUrl } from '@/App';
+import { GlobalContext, User, backendUrl } from '@/App';
 
 const Login = () => {
 
@@ -11,7 +11,7 @@ const Login = () => {
     const [email,setEmail] = useState<string>("");
     const [password,setPassword] = useState<string>("");
     const [loginErrorMsg,setLoginErrorMsg] = useState<string>("");
-    const {setLoggedInUser,setIsLoggedIn} = useContext(GlobalContext);
+    const {setLoggedInUser,setIsLoggedIn}:{loggedInUser:React.Dispatch<SetStateAction<User>>;setIsLoggedIn:React.Dispatch<SetStateAction<boolean>>} = useContext(GlobalContext);
     const navigate = useNavigate();
 
     const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,8 +34,12 @@ const Login = () => {
             setEmail("");
             setPassword("");
             navigate('/');
-        } catch (error) {
+        } catch (error:any) {
             console.log(error);
+            setLoginErrorMsg(error.response.data.message);
+            setTimeout(() => {
+                setLoginErrorMsg("");
+            },5000)
         }
     }
 
@@ -57,6 +61,9 @@ const Login = () => {
             <div className='flex items-center gap-1'>
                 <Checkbox checked={isShowPassword} onClick={() => setIsShowPassword(!isShowPassword)} id='show-password'/>
                 <label htmlFor="show-password">Show password</label>
+            </div>
+            <div className='flex text-red-500'>
+                {loginErrorMsg}
             </div>
             <div className='flex gap-2'>
                 Don't have an account? <Link className='text-orange-500' to='/register'>Click here to register</Link>
