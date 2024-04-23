@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from '../ui/button'
+import { Button } from '../components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
-import { Checkbox } from '../ui/checkbox';
+import { Checkbox } from '../components/ui/checkbox';
 import axios from 'axios';
 import { backendUrl } from '@/App';
 
