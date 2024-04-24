@@ -40,6 +40,12 @@ export type ProductCategory = {
   productCategoryName: string;
 };
 
+export type ProductSubCategory = {
+  _id:string;
+  productSubCategoryName:string;
+  parentCategory:string;
+}
+
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<{} | User>({});
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
